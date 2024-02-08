@@ -1,0 +1,23 @@
+name: Build
+on: [push]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    name: Run python
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup python environment 
+        uses: actions/setup-python@v1.1.1
+      - name: Run python
+        run: python ./hello.py
+  create_artifact:
+    needs: [job1]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: code
+          path: ./hello.py
